@@ -5,3 +5,4 @@ vcenter:
   username: user
   password: pass
   datacenter_name: DataCenter
+  cluster_name: cluster01
