@@ -1,7 +1,6 @@
 ---
-- name: Set up vsphere environment
-  hosts:
-    - vcenter
+- name: Setup/Test the vsphere environment
+  hosts: vcenter
   gather_facts: no
   roles:
     - vsphere

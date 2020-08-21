@@ -1,0 +1,4 @@
+---
+- import_tasks: test/test_commands.yml
+
+- import_tasks: test/test_datacenter.yml

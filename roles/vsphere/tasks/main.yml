@@ -1,2 +1,6 @@
-- debug:
-    msg: Hello world!
+---
+- import_tasks: setup.yml
+  tags: setup
+
+- import_tasks: test.yml
+  tags: test
