@@ -1,0 +1,4 @@
+export GOVC_URL=127.0.0.1:8989
+export GOVC_USERNAME=user
+export GOVC_PASSWORD=pass
+export GOVC_INSECURE=true

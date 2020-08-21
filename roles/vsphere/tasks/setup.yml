@@ -1,3 +1,2 @@
 ---
-- debug:
-    msg: Set up
+- import_tasks: setup/create_datacenter.yml

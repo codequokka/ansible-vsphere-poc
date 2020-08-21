@@ -1,0 +1,8 @@
+---
+- name: Check the govc command exists
+  command: govc version
+  changed_when: no
+
+- name: Check the jq command exists
+  command: jq --version
+  changed_when: no
