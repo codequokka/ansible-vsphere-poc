@@ -1,0 +1,7 @@
+---
+- name: Set up vsphere environment
+  hosts:
+    - vcenter
+  gather_facts: no
+  roles:
+    - vsphere
