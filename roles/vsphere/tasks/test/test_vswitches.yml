@@ -1,0 +1,16 @@
+---
+- name: Add tasks to check vswitches connected to esxi hosts
+  debug:
+    msg: "[TODO] Add tasks to check vswitches connected to esxi hosts"
+
+# $ govc host.vswitch.info -host 192.168.0.111
+# govc: default host resolves to multiple instances, please specify
+# Name:                    vSwitch0
+# Portgroup:               VM Network, Management Network
+# Pnic:                    vmnic0
+# MTU:                     1500
+# Ports:                   2560
+# Ports Available:         2554
+# Allow promiscuous mode:  No
+# Allow forged transmits:  Yes
+# Allow MAC changes:       Yes

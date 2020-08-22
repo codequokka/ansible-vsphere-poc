@@ -1,0 +1,42 @@
+---
+- name: Add tasks to add vswitches to esxi hosts
+  debug:
+    msg: "[TODO] Add tasks to add vswitches to esxi hosts"
+
+# - name: Add a VMware vSwitch
+#   vmware_vswitch:
+#     hostname: '{{ esxi_hostname }}'
+#     username: '{{ esxi_username }}'
+#     password: '{{ esxi_password }}'
+#     switch: vswitch_name
+#     nics: vmnic_name
+#     mtu: 9000
+
+# - name: Add a VMware vSwitch without any physical NIC attached
+#   vmware_vswitch:
+#     hostname: '{{ esxi_hostname }}'
+#     username: '{{ esxi_username }}'
+#     password: '{{ esxi_password }}'
+#     switch: vswitch_0001
+#     mtu: 9000
+
+# - name: Add a VMware vSwitch with multiple NICs
+#   vmware_vswitch:
+#     hostname: '{{ esxi_hostname }}'
+#     username: '{{ esxi_username }}'
+#     password: '{{ esxi_password }}'
+#     switch: vmware_vswitch_0004
+#     nics:
+#     - vmnic1
+#     - vmnic2
+#     mtu: 9000
+
+# - name: Add a VMware vSwitch to a specific host system
+#   vmware_vswitch:
+#     hostname: '{{ esxi_hostname }}'
+#     username: '{{ esxi_username }}'
+#     password: '{{ esxi_password }}'
+#     esxi_hostname: DC0_H0
+#     switch_name: vswitch_001
+#     nic_name: vmnic0
+#     mtu: 9000
