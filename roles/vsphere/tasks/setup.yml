@@ -5,3 +5,4 @@
 - import_tasks: setup/create_cluster.yml
 - import_tasks: setup/add_esxi_hosts.yml
 - import_tasks: setup/add_licenses.yml
+- import_tasks: setup/add_vswitches.yml
