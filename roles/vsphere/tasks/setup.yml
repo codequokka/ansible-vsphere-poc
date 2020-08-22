@@ -1,3 +1,4 @@
 ---
 - import_tasks: setup/create_datacenter.yml
 - import_tasks: setup/create_cluster.yml
+- import_tasks: setup/add_esxi_hosts.yml

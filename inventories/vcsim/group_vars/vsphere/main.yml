@@ -6,3 +6,11 @@ vcenter:
   password: pass
   datacenter_name: DataCenter
   cluster_name: cluster01
+
+esxi:
+  hostnames:
+    - 192.168.0.111
+    - 192.168.0.112
+    - 192.168.0.113
+  username: root
+  password: P@ssw0rd123
