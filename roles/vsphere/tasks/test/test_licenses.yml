@@ -1,0 +1,15 @@
+---
+- name: Add tasks to check vcenter/esxi hosts licenses are assigned
+  debug:
+    msg: "[TODO] Add tasks to check vcenter/esxi hosts licenses are assigned"
+
+# $ govc license.ls
+# Key:                           Edition:  Used:  Total:
+# 00000-00000-00000-00000-00000  eval      0      0
+
+# $ govc license.assigned.ls
+# Id:                                   Scope:                                Name:          License:
+# host-1170                             c4edb07b-7e47-48cf-afd2-d905c8303dc0  192.168.0.111  00000-00000-00000-00000-00000  
+# c4edb07b-7e47-48cf-afd2-d905c8303dc0                                        192.168.0.101  00000-00000-00000-00000-00000  
+# host-1174                             c4edb07b-7e47-48cf-afd2-d905c8303dc0  192.168.0.112  00000-00000-00000-00000-00000  
+# host-1176                             c4edb07b-7e47-48cf-afd2-d905c8303dc0  192.168.0.113  00000-00000-00000-00000-00000  
