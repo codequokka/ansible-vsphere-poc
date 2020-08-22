@@ -1,5 +1,5 @@
 ---
-- name: Check the cluster exists
+- name: Check the cluster exists in the datacenter
   command: |
     govc find
       -type=ClusterComputeResource /{{ vcenter.datacenter_name }}/host/{{ vcenter.cluster_name }}

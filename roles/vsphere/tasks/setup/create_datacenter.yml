@@ -1,5 +1,5 @@
 ---
-- name: Create the datacenter
+- name: Create the datacenter in the vcenter
   vmware_datacenter:
     hostname: "{{ vcenter.hostname }}"
     port: "{{ vcenter.port }}"

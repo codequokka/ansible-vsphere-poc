@@ -1,5 +1,5 @@
 ---
-- name: Create the cluster
+- name: Create the cluster in the datacenter
   vmware_cluster:
     hostname: "{{ vcenter.hostname }}"
     port: "{{ vcenter.port }}"

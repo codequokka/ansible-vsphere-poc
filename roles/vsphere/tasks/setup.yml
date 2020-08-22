@@ -1,4 +1,7 @@
 ---
+- import_tasks: test/test_commands.yml
+
 - import_tasks: setup/create_datacenter.yml
 - import_tasks: setup/create_cluster.yml
 - import_tasks: setup/add_esxi_hosts.yml
+- import_tasks: setup/add_licenses.yml
