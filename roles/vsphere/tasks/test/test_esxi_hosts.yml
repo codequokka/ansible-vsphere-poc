@@ -1,0 +1,14 @@
+---
+- name: Check esxi hosts exist in the cluster
+  command: |
+    govc find
+      -type=HostSystem /{{ vcenter.datacenter_name }}/host/{{ vcenter.cluster_name }}/{{ esxi_hostname }}
+  environment:
+    GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
+    GOVC_USERNAME: "{{ vcenter.username }}"
+    GOVC_PASSWORD: "{{ vcenter.password }}"
+    GOVC_INSECURE: true
+  changed_when: no
+  loop: "{{ esxi.hostnames }}"
+  loop_control:
+    loop_var: esxi_hostname
