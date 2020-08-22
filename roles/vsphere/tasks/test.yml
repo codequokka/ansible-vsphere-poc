@@ -6,3 +6,4 @@
 - import_tasks: test/test_esxi_hosts.yml
 - import_tasks: test/test_licenses.yml
 - import_tasks: test/test_vswitches.yml
+- import_tasks: test/test_hyper_threading.yml
