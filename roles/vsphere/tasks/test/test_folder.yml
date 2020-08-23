@@ -1,0 +1,11 @@
+---
+- name: Check the vm folder exists in the datacenter
+  command: |
+    govc find
+      -type=Folder /{{ vcenter.datacenter_name }}/vm/{{ vcenter.folder_name }}
+  environment:
+    GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
+    GOVC_USERNAME: "{{ vcenter.username }}"
+    GOVC_PASSWORD: "{{ vcenter.password }}"
+    GOVC_INSECURE: true
+  changed_when: no

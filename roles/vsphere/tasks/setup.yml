@@ -8,3 +8,4 @@
 - import_tasks: setup/add_vswitches.yml
 - import_tasks: setup/disable_hyper_threading.yml
 - import_tasks: setup/enable_vmotion.yml
+- import_tasks: setup/create_folder.yml
