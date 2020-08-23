@@ -8,6 +8,7 @@ vcenter:
   password: pass
   datacenter_name: DataCenter
   cluster_name: cluster01
+  folder_name: dev
 
 esxi:
   hostnames:
