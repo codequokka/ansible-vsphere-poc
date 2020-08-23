@@ -1,0 +1,21 @@
+---
+- name: Check the vmotion is enabled on vmkernel port on esxi hosts
+  shell: |
+    set -o pipefail
+    vmotion_enabled=$(govc host.vnic.info -json -host {{ esxi_hostname }} | jq -r '.Info[] | select(.Device == "{{ esxi.vmkernel_port }}") | .Services[] | select(. == "vmotion")')
+    if [ "$vmotion_enabled" != 'vmotion' ]; then
+      echo 'Vmotion on vmkernel port on esxi hosts is not enabled.'
+      exit 1
+    fi
+  args:
+    executable: /bin/bash
+  environment:
+    GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
+    GOVC_USERNAME: "{{ vcenter.username }}"
+    GOVC_PASSWORD: "{{ vcenter.password }}"
+    GOVC_INSECURE: true
+  changed_when: no
+  loop: "{{ esxi.hostnames }}"
+  loop_control:
+    loop_var: esxi_hostname
+  when: platform != "vcsim"
