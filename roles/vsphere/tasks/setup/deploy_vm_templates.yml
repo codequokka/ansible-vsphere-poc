@@ -1,0 +1,97 @@
+---
+- name: Gather ova files checksum
+  stat:
+    path: "{{ vm_template.ovf }}"
+    checksum_algorithm: sha256
+  register: _vm_templates_stat
+  loop: "{{ vm_templates }}"
+  loop_control:
+    loop_var: vm_template
+
+- name: Create ova files checksum list
+  set_fact:
+    ova_files_sha256: "{{ _vm_templates_stat.results | map(attribute='stat.checksum') | list }}"
+
+- name: Check ova files integrity
+  assert:
+    # Use "in" operator to avoid nested loop
+    that: "'{{ vm_template_sha256 }}' in ova_files_sha256"
+    quiet: yes
+  loop: "{{ vm_templates | map(attribute='sha256') | list }}"
+  loop_control:
+    loop_var: vm_template_sha256
+
+- name: Deploy vm templates from ova files
+  vmware_deploy_ovf:
+    hostname: "{{ vcenter.hostname }}"
+    port: "{{ vcenter.port }}"
+    username: "{{ vcenter.username }}"
+    password: "{{ vcenter.password }}"
+    datacenter: "{{ vcenter.datacenter_name }}"
+    cluster: "{{ vcenter.cluster_name }}"
+    folder: "/{{ vcenter.datacenter_name }}/vm/{{ vcenter.folder_name }}"
+    name: "{{ vm_template.name }}"
+    ovf: "{{ vm_template.ovf }}"
+    datastore: "{{ vm_template.datastore }}"
+    networks: "{{ vm_template.networks }}"
+    disk_provisioning: thin
+    allow_duplicates: no
+    power_on: no
+    validate_certs: no
+  loop: "{{ vm_templates }}"
+  loop_control:
+    loop_var: vm_template
+
+# Don't remove this task.
+# Without this task, a vm's mac address is not set in creating the vm from the vm template.
+- name: Remove the network adapter from vm templates if it exists
+  shell: |
+    set -o pipefail
+    network_adapter=$(govc device.info --json -vm {{ vm_template.name }} -net='VM Network' | jq '.Devices')
+    if [ "$network_adapter" != 'null' ]; then
+      govc device.remove -vm {{ vm_template.name }} ethernet-0
+    fi
+  args:
+    executable: /bin/bash
+  environment:
+    GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
+    GOVC_USERNAME: "{{ vcenter.username }}"
+    GOVC_PASSWORD: "{{ vcenter.password }}"
+    GOVC_INSECURE: true
+  changed_when: no
+  loop: "{{ vm_templates }}"
+  loop_control:
+    loop_var: vm_template
+
+- name: Update vm options on all vm templates
+  command: |
+    govc vm.change
+      -vm {{ vm_template.name }}
+      -latency high
+  environment:
+    GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
+    GOVC_USERNAME: "{{ vcenter.username }}"
+    GOVC_PASSWORD: "{{ vcenter.password }}"
+    GOVC_INSECURE: true
+  changed_when: no
+  loop: "{{ vm_templates }}"
+  loop_control:
+    loop_var: vm_template
+
+- name: Update vm options on the rhcos vm template
+  command: |
+    govc vm.change
+      -vm {{ vm_template.name }}
+      -e=disk.EnableUUID=TRUE
+      -e=guestinfo.ignition.config.data.encoding=base64
+      -e=guestinfo.ignition.config.data=blah
+  environment:
+    GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
+    GOVC_USERNAME: "{{ vcenter.username }}"
+    GOVC_PASSWORD: "{{ vcenter.password }}"
+    GOVC_INSECURE: true
+  changed_when: no
+  loop: "{{ vm_templates }}"
+  loop_control:
+    loop_var: vm_template
+  when: vm_template.name.startswith('OpenShift4')
