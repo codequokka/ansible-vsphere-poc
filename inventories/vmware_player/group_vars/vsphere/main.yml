@@ -18,3 +18,23 @@ esxi:
   username: root
   password: P@ssw0rd123
   vmkernel_port: vmk0
+
+vm_templates:
+  - name: OpenShift4_rhcos-4.4.3
+    ovf: /home/nbchk/work/vsphere/ansible-vsphere-poc/repository/ova/rhcos-4.4.3-x86_64-vmware.x86_64.ova
+    sha256: 832b1f07f12608a7501ef944e6aa0021a76f2f26703a435d4d3628f1667dde15
+    datastore: datastore1
+    networks:
+      VM Network: VM Network
+  - name: Manage-1.0.0
+    ovf: /home/nbchk/work/vsphere/ansible-vsphere-poc/repository/ova/rhcos-4.4.3-x86_64-vmware.x86_64.ova
+    sha256: 832b1f07f12608a7501ef944e6aa0021a76f2f26703a435d4d3628f1667dde15
+    datastore: datastore1 (1)
+    networks:
+      VM Network: VM Network
+  - name: LoadBlancer-1.0.0
+    ovf: /home/nbchk/work/vsphere/ansible-vsphere-poc/repository/ova/rhcos-4.4.3-x86_64-vmware.x86_64.ova
+    sha256: 832b1f07f12608a7501ef944e6aa0021a76f2f26703a435d4d3628f1667dde15
+    datastore: datastore1 (2)
+    networks:
+      VM Network: VM Network
