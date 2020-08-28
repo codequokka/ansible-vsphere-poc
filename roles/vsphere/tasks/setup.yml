@@ -10,3 +10,4 @@
 - import_tasks: setup/enable_vmotion.yml
 - import_tasks: setup/create_folder.yml
 - import_tasks: setup/deploy_vm_templates.yml
+- import_tasks: setup/deploy_vms.yml

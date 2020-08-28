@@ -38,3 +38,203 @@ vm_templates:
     datastore: datastore1 (2)
     networks:
       VM Network: VM Network
+
+bootstrap_vm:
+  common_specs:
+    # ignition: 'master.64'
+    template: OpenShift4_rhcos-4.4.3
+    hardware:
+      num_cpus: 1
+      num_cpu_cores_per_socket: 1
+      cpu_reservation: 100
+      memory_mb: 512
+      mem_reservation: 512
+      memory_reservation_lock: True
+  vms:
+    - name: bootstrap001
+      esxi_hostname: 192.168.0.111
+      disk:
+        - size_gb: 16
+          type: thin
+          datastore: datastore1
+      networks:
+        - name: VM Network
+          type: static
+          mac: 00:50:56:a8:aa:a1
+          # vlan:
+
+master_vm:
+  common_specs:
+    # ignition: 'master.64'
+    template: OpenShift4_rhcos-4.4.3
+    hardware:
+      num_cpus: 1
+      num_cpu_cores_per_socket: 1
+      cpu_reservation: 100
+      memory_mb: 512
+      mem_reservation: 512
+      memory_reservation_lock: True
+  vms:
+    - name: master001
+      esxi_hostname: 192.168.0.111
+      disk:
+        - size_gb: 16
+          type: thin
+          datastore: datastore1
+      networks:
+        - name: VM Network
+          type: static
+          mac: 00:50:56:a8:aa:b1
+          # vlan:
+    - name: master002
+      esxi_hostname: 192.168.0.112
+      disk:
+        - size_gb: 16
+          type: thin
+          datastore: datastore1 (1)
+      networks:
+        - name: VM Network
+          type: static
+          mac: 00:50:56:a8:aa:b2
+          # vlan:
+    - name: master003
+      esxi_hostname: 192.168.0.113
+      disk:
+        - size_gb: 16
+          type: thin
+          datastore: datastore1 (2)
+      networks:
+        - name: VM Network
+          type: static
+          mac: 00:50:56:a8:aa:b3
+          # vlan:
+
+infra_vm:
+  common_specs:
+    # ignition: 'master.64'
+    template: OpenShift4_rhcos-4.4.3
+    hardware:
+      num_cpus: 1
+      num_cpu_cores_per_socket: 1
+      cpu_reservation: 100
+      memory_mb: 512
+      mem_reservation: 512
+      memory_reservation_lock: True
+  vms:
+    - name: infra001
+      esxi_hostname: 192.168.0.111
+      disk:
+        - size_gb: 16
+          type: thin
+          datastore: datastore1
+      networks:
+        - name: VM Network
+          type: static
+          mac: 00:50:56:a8:aa:c1
+          # vlan:
+    - name: infra002
+      esxi_hostname: 192.168.0.112
+      disk:
+        - size_gb: 16
+          type: thin
+          datastore: datastore1 (1)
+      networks:
+        - name: VM Network
+          type: static
+          mac: 00:50:56:a8:aa:c2
+          # vlan:
+    - name: infra003
+      esxi_hostname: 192.168.0.113
+      disk:
+        - size_gb: 16
+          type: thin
+          datastore: datastore1 (2)
+      networks:
+        - name: VM Network
+          type: static
+          mac: 00:50:56:a8:aa:c3
+          # vlan:
+
+worker_vm:
+  common_specs:
+    # ignition: 'master.64'
+    template: OpenShift4_rhcos-4.4.3
+    hardware:
+      num_cpus: 1
+      num_cpu_cores_per_socket: 1
+      cpu_reservation: 100
+      memory_mb: 512
+      mem_reservation: 512
+      memory_reservation_lock: True
+  vms:
+    - name: worker001
+      esxi_hostname: 192.168.0.112
+      disk:
+        - size_gb: 16
+          type: thin
+          datastore: datastore1 (1)
+      networks:
+        - name: VM Network
+          type: static
+          mac: 00:50:56:a8:aa:d1
+          # vlan:
+    - name: worker002
+      esxi_hostname: 192.168.0.113
+      disk:
+        - size_gb: 16
+          type: thin
+          datastore: datastore1 (2)
+      networks:
+        - name: VM Network
+          type: static
+          mac: 00:50:56:a8:aa:d2
+          # vlan:
+
+manage_vm:
+  common_specs:
+    template: Manage-1.0.0
+    hardware:
+      num_cpus: 1
+      num_cpu_cores_per_socket: 1
+      cpu_reservation: 100
+      memory_mb: 512
+      mem_reservation: 512
+      memory_reservation_lock: True
+  vms:
+    - name: manage001
+      esxi_hostname: 192.168.0.111
+      disk:
+        - size_gb: 16
+          type: thin
+          datastore: datastore1
+        - size_gb: 16
+          type: thin
+          datastore: datastore1
+      networks:
+        - name: VM Network
+          type: static
+          mac: 00:50:56:a8:aa:e1
+          # vlan:
+
+loadbalancer_vm:
+  common_specs:
+    template: LoadBlancer-1.0.0
+    hardware:
+      num_cpus: 1
+      num_cpu_cores_per_socket: 1
+      cpu_reservation: 100
+      memory_mb: 512
+      mem_reservation: 512
+      memory_reservation_lock: True
+  vms:
+    - name: loadbalancer001
+      esxi_hostname: 192.168.0.111
+      disk:
+        - size_gb: 16
+          type: thin
+          datastore: datastore1
+      networks:
+        - name: VM Network
+          type: static
+          mac: 00:50:56:a8:aa:f1
+          # vlan:
