@@ -1,0 +1,30 @@
+---
+- name: Gather vm info
+  command: |
+    govc find
+      -type VirtualMachine /{{ vcenter.datacenter_name }}/vm/{{ vcenter.folder_name }}
+  environment:
+    GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
+    GOVC_USERNAME: "{{ vcenter.username }}"
+    GOVC_PASSWORD: "{{ vcenter.password }}"
+    GOVC_INSECURE: true
+  changed_when: no
+  register: _govc_vm_info
+
+- name: Make a list of deployed vm name
+  set_fact:
+    deployed_vm_names: "{{ _govc_vm_info.stdout_lines | map('basename') | list }}"
+
+- name: Make a list of vm info
+  set_fact:
+    vm_info: "{{ master_vm.vms + infra_vm.vms + worker_vm.vms + manage_vm.vms + loadbalancer_vm.vms }}"
+
+- name: Check vms exist
+  assert:
+    # Use "in" operator to avoid nested loop
+    that: "'{{ vm_name }}' in deployed_vm_names"
+    success_msg: "Vm: {{ vm_name }} exists"
+    quiet: yes
+  loop: "{{ vm_info | map(attribute='name') | list }}"
+  loop_control:
+    loop_var: vm_name

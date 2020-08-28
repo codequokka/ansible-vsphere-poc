@@ -10,3 +10,4 @@
 - import_tasks: test/test_vmotion.yml
 - import_tasks: test/test_folder.yml
 - import_tasks: test/test_vm_templates.yml
+- import_tasks: test/test_vms.yml
