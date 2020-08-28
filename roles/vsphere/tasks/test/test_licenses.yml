@@ -1,7 +1,27 @@
 ---
-- name: Add tasks to check vcenter/esxi hosts licenses are assigned
-  debug:
-    msg: "[TODO] Add tasks to check vcenter/esxi hosts licenses are assigned"
+- name: Create the list of vsphere hostnames
+  set_fact:
+    vsphere_hosts: "['{{ vcenter.hostname }}'] + {{ esxi.hostnames }}"
+
+- name: Check licsenses are added to the vsphere hosts
+  shell: |
+    set -o pipefail
+    license=$(govc license.assigned.ls --json | jq -r '.[] | select(.EntityDisplayName == "{{ vsphere_host }}").AssignedLicense.LicenseKey')
+    if [ "$license" != '{{ esxi.license }}' ]; then
+      echo "License: $license is not added to the vsphere host"
+      exit 1
+    fi
+  args:
+    executable: /bin/bash
+  environment:
+    GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
+    GOVC_USERNAME: "{{ vcenter.username }}"
+    GOVC_PASSWORD: "{{ vcenter.password }}"
+    GOVC_INSECURE: true
+  changed_when: no
+  loop: "{{ vsphere_hosts }}"
+  loop_control:
+    loop_var: vsphere_host
 
 # $ govc license.ls
 # Key:                           Edition:  Used:  Total:
