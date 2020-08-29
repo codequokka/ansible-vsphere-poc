@@ -1,5 +1,5 @@
 ---
-- name: Enable the vmotion on the vmkernel port on esxi hosts
+- name: Enable the vmotion feature on the vmkernel port on esxi hosts
   command: |
     govc host.vnic.service
       -host {{ esxi_hostname }}

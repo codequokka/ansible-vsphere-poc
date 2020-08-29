@@ -1,10 +1,10 @@
 ---
-- name: Check the vmotion is enabled on vmkernel port on esxi hosts
+- name: Check the vmotion feature is enabled on vmkernel port on esxi hosts
   shell: |
     set -o pipefail
     vmotion_enabled=$(govc host.vnic.info -json -host {{ esxi_hostname }} | jq -r '.Info[] | select(.Device == "{{ esxi.vmkernel_port }}") | .Services[] | select(. == "vmotion")')
     if [ "$vmotion_enabled" != 'vmotion' ]; then
-      echo 'Vmotion on vmkernel port on esxi hosts is not enabled.'
+      echo 'Vmotion on vmkernel port on esxi host: {{ esxi_hostname }} is not enabled.'
       exit 1
     fi
   args:
