@@ -1,7 +1,7 @@
 ---
-- name: Add tasks to disable the hyper threading on esxi hosts
+- name: Add tasks to disable the hyper threading feature on esxi hosts
   debug:
-    msg: "[TODO] Add tasks to disable the hyper threading on esxi hosts"
+    msg: "[TODO] Add tasks to disable the hyper threading feature on esxi hosts"
 
 # - name: Disable Hyperthreading for an host system
 #   vmware_host_hyperthreading:
