@@ -8,7 +8,9 @@ vcenter:
   password: P@ssw0rd123
   datacenter_name: DataCenter
   cluster_name: cluster01
-  folder_name: dev
+  folder:
+    vm: dev
+    backup: backup
   license: 00000-00000-00000-00000-00000
 
 esxi:
