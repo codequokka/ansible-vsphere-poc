@@ -1,7 +1,7 @@
 ---
-- name: Add tasks to check vswitches connected to esxi hosts
+- name: Add tasks to check vswitches are added to esxi hosts
   debug:
-    msg: "[TODO] Add tasks to check vswitches connected to esxi hosts"
+    msg: "[TODO] Add tasks to check vswitches are added to esxi hosts"
 
 # $ govc host.vswitch.info -host 192.168.0.111
 # govc: default host resolves to multiple instances, please specify
