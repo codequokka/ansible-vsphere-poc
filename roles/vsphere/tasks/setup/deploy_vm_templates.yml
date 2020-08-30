@@ -1,5 +1,5 @@
 ---
-- name: Gather ova files checksum
+- name: Gather the checksum of ova files
   stat:
     path: "{{ vm_template.ovf }}"
     checksum_algorithm: sha256
@@ -8,13 +8,12 @@
   loop_control:
     loop_var: vm_template
 
-- name: Create ova files checksum list
+- name: Create the list of ova files checksum
   set_fact:
     ova_files_sha256: "{{ _vm_templates_stat.results | map(attribute='stat.checksum') | list }}"
 
-- name: Check ova files integrity
+- name: Check the integrity of ova files
   assert:
-    # Use "in" operator to avoid nested loop
     that: "'{{ vm_template_sha256 }}' in ova_files_sha256"
     quiet: yes
   loop: "{{ vm_templates | map(attribute='sha256') | list }}"
@@ -29,7 +28,7 @@
     password: "{{ vcenter.password }}"
     datacenter: "{{ vcenter.datacenter_name }}"
     cluster: "{{ vcenter.cluster_name }}"
-    folder: "/{{ vcenter.datacenter_name }}/vm/{{ vcenter.folder_name }}"
+    folder: "/{{ vcenter.datacenter_name }}/vm/{{ vcenter.folder.vm }}"
     name: "{{ vm_template.name }}"
     ovf: "{{ vm_template.ovf }}"
     datastore: "{{ vm_template.datastore }}"
@@ -63,7 +62,7 @@
   loop_control:
     loop_var: vm_template
 
-- name: Update vm options on all vm templates
+- name: Set the latency sensitivity to high on all vm templates
   command: |
     govc vm.change
       -vm {{ vm_template.name }}
@@ -82,9 +81,9 @@
   command: |
     govc vm.change
       -vm {{ vm_template.name }}
-      -e=disk.EnableUUID=TRUE
-      -e=guestinfo.ignition.config.data.encoding=base64
-      -e=guestinfo.ignition.config.data=blah
+      -e disk.EnableUUID=TRUE
+      -e guestinfo.ignition.config.data.encoding=base64
+      -e guestinfo.ignition.config.data=blah
   environment:
     GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
     GOVC_USERNAME: "{{ vcenter.username }}"
@@ -94,4 +93,4 @@
   loop: "{{ vm_templates }}"
   loop_control:
     loop_var: vm_template
-  when: vm_template.name.startswith('OpenShift4')
+  when: vm_template.name.startswith('OpenShift')
