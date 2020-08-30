@@ -1,28 +1,26 @@
 ---
-- name: Add tasks to add licenses to vcenter/esxi hosts
-  debug:
-    msg: "[TODO] Add tasks to add licenses to vcenter/esxi hosts"
+- name: Add the license to the vcenter
+  vcenter_license:
+    hostname: "{{ vcenter.hostname }}"
+    port: "{{ vcenter.port }}"
+    username: "{{ vcenter.username }}"
+    password: "{{ vcenter.password }}"
+    license: "{{ vcenter.license }}"
+    validate_certs: no
+    state: present
+  changed_when: no
 
-# - name: Add the license to vcenter
-#   vcenter_license:
-#     hostname: '{{ vcenter.hostname }}'
-#     port: '{{ vcenter.port }}'
-#     username: '{{ vcenter.username }}'
-#     password: '{{ vcenter.password }}'
-#     license: 00000-00000-00000-00000-00000
-#     validate_certs: no
-#     state: present
-
-# - name: Add licenses to esxi hosts
-#   vcenter_license:
-#     hostname: '{{ vcenter.hostname }}'
-#     port: '{{ vcenter.port }}'
-#     username: '{{ vcenter.username }}'
-#     password: '{{ vcenter.password }}'
-#     esxi_hostname: '{{ esxi_hostname }}'
-#     license: 00000-00000-00000-00000-00000
-#     validate_certs: no
-#     state: present
-#   loop: "{{ esxi.hostnames }}"
-#   loop_control:
-#     loop_var: esxi_hostname
+- name: Add licenses to esxi hosts
+  vcenter_license:
+    hostname: "{{ vcenter.hostname }}"
+    port: "{{ vcenter.port }}"
+    username: "{{ vcenter.username }}"
+    password: "{{ vcenter.password }}"
+    esxi_hostname: "{{ esxi_hostname }}"
+    license: "{{ esxi.license }}"
+    validate_certs: no
+    state: present
+  changed_when: no
+  loop: "{{ esxi.hostnames }}"
+  loop_control:
+    loop_var: esxi_hostname

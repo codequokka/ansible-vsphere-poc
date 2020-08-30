@@ -8,7 +8,10 @@ vcenter:
   password: P@ssw0rd123
   datacenter_name: DataCenter
   cluster_name: cluster01
-  folder_name: dev
+  folder:
+    vm: dev
+    backup: backup
+  license: 00000-00000-00000-00000-00000
 
 esxi:
   hostnames:
@@ -18,6 +21,7 @@ esxi:
   username: root
   password: P@ssw0rd123
   vmkernel_port: vmk0
+  license: 00000-00000-00000-00000-00000
 
 vm_templates:
   - name: OpenShift4_rhcos-4.4.3

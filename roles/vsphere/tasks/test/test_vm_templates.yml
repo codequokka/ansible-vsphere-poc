@@ -1,8 +1,8 @@
 ---
-- name: Gather vm templates info
+- name: Gather deployed vm templates info
   command: |
     govc find
-      -type VirtualMachine /{{ vcenter.datacenter_name }}/vm/{{ vcenter.folder_name }}
+      -type VirtualMachine /{{ vcenter.datacenter_name }}/vm/{{ vcenter.folder.vm }}
   environment:
     GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
     GOVC_USERNAME: "{{ vcenter.username }}"
@@ -11,15 +11,14 @@
   changed_when: no
   register: _govc_vm_templates_info
 
-- name: Make a list of deployed vm template's name
+- name: Create a list of deployed vm template's name
   set_fact:
     deployed_vm_template_names: "{{ _govc_vm_templates_info.stdout_lines | map('basename') | list }}"
 
 - name: Check vm templates exist
   assert:
-    # Use "in" operator to avoid nested loop
     that: "'{{ vm_template_name }}' in deployed_vm_template_names"
-    success_msg: "Vm template: {{ vm_template_name }} exists"
+    fail_msg: "Vm template: {{ vm_template_name }} does not exist"
     quiet: yes
   loop: "{{ vm_templates | map(attribute='name') | list }}"
   loop_control:

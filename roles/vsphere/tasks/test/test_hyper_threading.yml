@@ -1,31 +1,27 @@
 ---
-- name: Add tasks to check the hyper threading is disabled on esxi hosts
-  debug:
-    msg: "[TODO] Add tasks to check the hyper threading is disabled on esxi hosts"
-
-# - name: Check the hyper threading is disabled on esxi hosts
-#   shell: |
-#     set -o pipefail
-#     ht=$(govc host.info -json {{ esxi_hostname }} | jq '.HostSystems[0].Config.HyperThread')
-#     ht_available=$(echo $ht | jq '.Available')
-#     ht_actvie=$(echo $ht | jq '.Active')
-#     ht_config=$(echo $ht | jq '.Config')
-#     if [ "$ht_available" = 'false' ]; then
-#       echo 'Hyper threading is not supported.'
-#       exit 0
-#     fi
-#     if [ "$ht_active" != 'false' -o "$ht_config" != 'false' ]; then
-#       echo 'Hyper threading is not disabled.'
-#       exit 1
-#     fi
-#   args:
-#     executable: /bin/bash
-#   environment:
-#     GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
-#     GOVC_USERNAME: "{{ vcenter.username }}"
-#     GOVC_PASSWORD: "{{ vcenter.password }}"
-#     GOVC_INSECURE: true
-#   changed_when: no
-#   loop: "{{ esxi.hostnames }}"
-#   loop_control:
-#     loop_var: esxi_hostname
+- name: Check the hyper threading feature is disabled on esxi hosts
+  shell: |
+    set -o pipefail
+    ht=$(govc host.info -json {{ esxi_hostname }} | jq '.HostSystems[].Config.HyperThread')
+    ht_available=$(echo $ht | jq '.Available')
+    ht_actvie=$(echo $ht | jq '.Active')
+    ht_config=$(echo $ht | jq '.Config')
+    if [ "$ht_available" = 'false' ]; then
+      echo 'The hyper threading feature is not supported on the esxi host: {{ esxi_hostname }}'
+      exit 0
+    fi
+    if [ "$ht_active" != 'false' -o "$ht_config" != 'false' ]; then
+      echo 'The hyper threading feature is not disabled on the esxi host: {{ esxi_hostname }}'
+      exit 1
+    fi
+  args:
+    executable: /bin/bash
+  environment:
+    GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
+    GOVC_USERNAME: "{{ vcenter.username }}"
+    GOVC_PASSWORD: "{{ vcenter.password }}"
+    GOVC_INSECURE: true
+  changed_when: no
+  loop: "{{ esxi.hostnames }}"
+  loop_control:
+    loop_var: esxi_hostname

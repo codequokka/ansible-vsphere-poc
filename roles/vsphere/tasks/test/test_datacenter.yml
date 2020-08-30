@@ -1,6 +1,7 @@
 ---
 - name: Check the datacenter exists in the vcenter
-  command: govc find -type Datacenter /{{ vcenter.datacenter_name }}
+  command: |
+    govc find -type Datacenter /{{ vcenter.datacenter_name }}
   environment:
     GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
     GOVC_USERNAME: "{{ vcenter.username }}"
