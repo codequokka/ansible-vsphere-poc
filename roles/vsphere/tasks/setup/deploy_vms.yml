@@ -6,16 +6,16 @@
     username: "{{ vcenter.username }}"
     password: "{{ vcenter.password }}"
     datacenter: "{{ vcenter.datacenter_name }}"
-    folder: "/{{ vcenter.datacenter_name }}/vm/{{ vcenter.folder_name }}"
+    folder: "/{{ vcenter.datacenter_name }}/vm/{{ vcenter.folder.vm }}"
     name: "{{ vm.name }}"
-    template: "{{ bootstrap_vm.common_specs.template }}"
+    template: "{{ bootstrap.common_specs.template }}"
     esxi_hostname: "{{ vm.esxi_hostname }}"
-    hardware: "{{ bootstrap_vm.common_specs.hardware }}"
+    hardware: "{{ bootstrap.common_specs.hardware }}"
     disk: "{{ vm.disk }}"
     networks: "{{ vm.networks }}"
     validate_certs: no
     state: poweredoff
-  loop: "{{ bootstrap_vm.vms }}"
+  loop: "{{ bootstrap.vms }}"
   loop_control:
     loop_var: vm
 
@@ -26,16 +26,16 @@
     username: "{{ vcenter.username }}"
     password: "{{ vcenter.password }}"
     datacenter: "{{ vcenter.datacenter_name }}"
-    folder: "/{{ vcenter.datacenter_name }}/vm/{{ vcenter.folder_name }}"
+    folder: "/{{ vcenter.datacenter_name }}/vm/{{ vcenter.folder.vm }}"
     name: "{{ vm.name }}"
-    template: "{{ master_vm.common_specs.template }}"
+    template: "{{ master.common_specs.template }}"
     esxi_hostname: "{{ vm.esxi_hostname }}"
-    hardware: "{{ master_vm.common_specs.hardware }}"
+    hardware: "{{ master.common_specs.hardware }}"
     disk: "{{ vm.disk }}"
     networks: "{{ vm.networks }}"
     validate_certs: no
     state: poweredoff
-  loop: "{{ master_vm.vms }}"
+  loop: "{{ master.vms }}"
   loop_control:
     loop_var: vm
 
@@ -46,16 +46,16 @@
     username: "{{ vcenter.username }}"
     password: "{{ vcenter.password }}"
     datacenter: "{{ vcenter.datacenter_name }}"
-    folder: "/{{ vcenter.datacenter_name }}/vm/{{ vcenter.folder_name }}"
+    folder: "/{{ vcenter.datacenter_name }}/vm/{{ vcenter.folder.vm }}"
     name: "{{ vm.name }}"
-    template: "{{ infra_vm.common_specs.template }}"
+    template: "{{ infra.common_specs.template }}"
     esxi_hostname: "{{ vm.esxi_hostname }}"
-    hardware: "{{ infra_vm.common_specs.hardware }}"
+    hardware: "{{ infra.common_specs.hardware }}"
     disk: "{{ vm.disk }}"
     networks: "{{ vm.networks }}"
     validate_certs: no
     state: poweredoff
-  loop: "{{ infra_vm.vms }}"
+  loop: "{{ infra.vms }}"
   loop_control:
     loop_var: vm
 
@@ -66,16 +66,16 @@
     username: "{{ vcenter.username }}"
     password: "{{ vcenter.password }}"
     datacenter: "{{ vcenter.datacenter_name }}"
-    folder: "/{{ vcenter.datacenter_name }}/vm/{{ vcenter.folder_name }}"
+    folder: "/{{ vcenter.datacenter_name }}/vm/{{ vcenter.folder.vm }}"
     name: "{{ vm.name }}"
-    template: "{{ worker_vm.common_specs.template }}"
+    template: "{{ worker.common_specs.template }}"
     esxi_hostname: "{{ vm.esxi_hostname }}"
-    hardware: "{{ worker_vm.common_specs.hardware }}"
+    hardware: "{{ worker.common_specs.hardware }}"
     disk: "{{ vm.disk }}"
     networks: "{{ vm.networks }}"
     validate_certs: no
     state: poweredoff
-  loop: "{{ worker_vm.vms }}"
+  loop: "{{ worker.vms }}"
   loop_control:
     loop_var: vm
 
@@ -86,16 +86,16 @@
     username: "{{ vcenter.username }}"
     password: "{{ vcenter.password }}"
     datacenter: "{{ vcenter.datacenter_name }}"
-    folder: "/{{ vcenter.datacenter_name }}/vm/{{ vcenter.folder_name }}"
+    folder: "/{{ vcenter.datacenter_name }}/vm/{{ vcenter.folder.vm }}"
     name: "{{ vm.name }}"
-    template: "{{ manage_vm.common_specs.template }}"
+    template: "{{ manage.common_specs.template }}"
     esxi_hostname: "{{ vm.esxi_hostname }}"
-    hardware: "{{ manage_vm.common_specs.hardware }}"
+    hardware: "{{ manage.common_specs.hardware }}"
     disk: "{{ vm.disk }}"
     networks: "{{ vm.networks }}"
     validate_certs: no
     state: poweredoff
-  loop: "{{ manage_vm.vms }}"
+  loop: "{{ manage.vms }}"
   loop_control:
     loop_var: vm
 
@@ -106,15 +106,15 @@
     username: "{{ vcenter.username }}"
     password: "{{ vcenter.password }}"
     datacenter: "{{ vcenter.datacenter_name }}"
-    folder: "/{{ vcenter.datacenter_name }}/vm/{{ vcenter.folder_name }}"
+    folder: "/{{ vcenter.datacenter_name }}/vm/{{ vcenter.folder.vm }}"
     name: "{{ vm.name }}"
-    template: "{{ loadbalancer_vm.common_specs.template }}"
+    template: "{{ loadbalancer.common_specs.template }}"
     esxi_hostname: "{{ vm.esxi_hostname }}"
-    hardware: "{{ loadbalancer_vm.common_specs.hardware }}"
+    hardware: "{{ loadbalancer.common_specs.hardware }}"
     disk: "{{ vm.disk }}"
     networks: "{{ vm.networks }}"
     validate_certs: no
     state: poweredoff
-  loop: "{{ loadbalancer_vm.vms }}"
+  loop: "{{ loadbalancer.vms }}"
   loop_control:
     loop_var: vm

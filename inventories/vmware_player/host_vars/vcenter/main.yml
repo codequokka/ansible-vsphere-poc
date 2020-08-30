@@ -43,7 +43,7 @@ vm_templates:
     networks:
       VM Network: VM Network
 
-bootstrap_vm:
+bootstrap:
   common_specs:
     # ignition: 'master.64'
     template: OpenShift4_rhcos-4.4.3
@@ -67,7 +67,7 @@ bootstrap_vm:
           mac: 00:50:56:a8:aa:a1
           # vlan:
 
-master_vm:
+master:
   common_specs:
     # ignition: 'master.64'
     template: OpenShift4_rhcos-4.4.3
@@ -113,7 +113,7 @@ master_vm:
           mac: 00:50:56:a8:aa:b3
           # vlan:
 
-infra_vm:
+infra:
   common_specs:
     # ignition: 'master.64'
     template: OpenShift4_rhcos-4.4.3
@@ -159,7 +159,7 @@ infra_vm:
           mac: 00:50:56:a8:aa:c3
           # vlan:
 
-worker_vm:
+worker:
   common_specs:
     # ignition: 'master.64'
     template: OpenShift4_rhcos-4.4.3
@@ -194,7 +194,7 @@ worker_vm:
           mac: 00:50:56:a8:aa:d2
           # vlan:
 
-manage_vm:
+manage:
   common_specs:
     template: Manage-1.0.0
     hardware:
@@ -220,7 +220,7 @@ manage_vm:
           mac: 00:50:56:a8:aa:e1
           # vlan:
 
-loadbalancer_vm:
+loadbalancer:
   common_specs:
     template: LoadBlancer-1.0.0
     hardware:
