@@ -62,20 +62,20 @@
   loop_control:
     loop_var: vm_template
 
-- name: Set the latency sensitivity to high on all vm templates
-  command: |
-    govc vm.change
-      -vm {{ vm_template.name }}
-      -latency high
-  environment:
-    GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
-    GOVC_USERNAME: "{{ vcenter.username }}"
-    GOVC_PASSWORD: "{{ vcenter.password }}"
-    GOVC_INSECURE: true
-  changed_when: no
-  loop: "{{ vm_templates }}"
-  loop_control:
-    loop_var: vm_template
+# - name: Set the latency sensitivity to high on all vm templates
+#   command: |
+#     govc vm.change
+#       -vm {{ vm_template.name }}
+#       -latency high
+#   environment:
+#     GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
+#     GOVC_USERNAME: "{{ vcenter.username }}"
+#     GOVC_PASSWORD: "{{ vcenter.password }}"
+#     GOVC_INSECURE: true
+#   changed_when: no
+#   loop: "{{ vm_templates }}"
+#   loop_control:
+#     loop_var: vm_template
 
 - name: Update vm options on the rhcos vm template
   command: |

@@ -5,7 +5,7 @@ vcenter:
   hostname: 192.168.0.101
   port: 443
   username: administrator@vsphere.local
-  password: P@ssw0rd123
+  password: P@ssword123
   datacenter_name: DataCenter
   cluster_name: cluster01
   folder:
@@ -19,7 +19,7 @@ esxi:
     - 192.168.0.112
     - 192.168.0.113
   username: root
-  password: P@ssw0rd123
+  password: P@ssword123
   vmkernel_port: vmk0
   license: 00000-00000-00000-00000-00000
 
