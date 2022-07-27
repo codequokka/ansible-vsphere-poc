@@ -1,6 +1,6 @@
 ---
 - name: Check the hyper threading feature is disabled on esxi hosts
-  shell: |
+  ansible.builtin.shell: |
     set -o pipefail
     ht=$(govc host.info -json {{ esxi_hostname }} | jq '.HostSystems[].Config.HyperThread')
     ht_available=$(echo $ht | jq '.Available')
@@ -20,8 +20,8 @@
     GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
     GOVC_USERNAME: "{{ vcenter.username }}"
     GOVC_PASSWORD: "{{ vcenter.password }}"
-    GOVC_INSECURE: true
-  changed_when: no
+    GOVC_INSECURE: "true"
+  changed_when: false
   loop: "{{ esxi.hostnames }}"
   loop_control:
     loop_var: esxi_hostname

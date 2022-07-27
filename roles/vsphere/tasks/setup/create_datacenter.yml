@@ -1,10 +1,10 @@
 ---
 - name: Create the datacenter in the vcenter
-  vmware_datacenter:
+  community.vmware.vmware_datacenter:
     hostname: "{{ vcenter.hostname }}"
     port: "{{ vcenter.port }}"
     username: "{{ vcenter.username }}"
     password: "{{ vcenter.password }}"
     datacenter_name: "{{ vcenter.datacenter_name }}"
-    validate_certs: no
+    validate_certs: false
     state: present

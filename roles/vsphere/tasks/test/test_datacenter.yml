@@ -1,10 +1,10 @@
 ---
 - name: Check the datacenter exists in the vcenter
-  command: |
+  ansible.builtin.command: |
     govc find -type Datacenter /{{ vcenter.datacenter_name }}
   environment:
     GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
     GOVC_USERNAME: "{{ vcenter.username }}"
     GOVC_PASSWORD: "{{ vcenter.password }}"
-    GOVC_INSECURE: true
-  changed_when: no
+    GOVC_INSECURE: "true"
+  changed_when: false

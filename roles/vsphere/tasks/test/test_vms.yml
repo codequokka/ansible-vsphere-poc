@@ -1,29 +1,29 @@
 ---
 - name: Gather deployed vm info
-  command: |
+  ansible.builtin.command: |
     govc find
       -type VirtualMachine /{{ vcenter.datacenter_name }}/vm/{{ vcenter.folder.vm }}
   environment:
     GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
     GOVC_USERNAME: "{{ vcenter.username }}"
     GOVC_PASSWORD: "{{ vcenter.password }}"
-    GOVC_INSECURE: true
-  changed_when: no
+    GOVC_INSECURE: "true"
+  changed_when: false
   register: _govc_vm_info
 
 - name: Make a list of deployed vm name
-  set_fact:
+  ansible.builtin.set_fact:
     deployed_vm_names: "{{ _govc_vm_info.stdout_lines | map('basename') | list }}"
 
 - name: Make a list of vm info
-  set_fact:
+  ansible.builtin.set_fact:
     vm_info: "{{ master.vms + infra.vms + worker.vms + manage.vms + loadbalancer.vms }}"
 
 - name: Check vms exist
-  assert:
+  ansible.builtin.assert:
     that: "'{{ vm_name }}' in deployed_vm_names"
     fail_msg: "Vm: {{ vm_name }} does not exist"
-    quiet: yes
+    quiet: true
   loop: "{{ vm_info | map(attribute='name') | list }}"
   loop_control:
     loop_var: vm_name

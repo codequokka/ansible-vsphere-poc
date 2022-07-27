@@ -1,6 +1,6 @@
 ---
 - name: Deploy bootstrap vms from vm template
-  vmware_guest:
+  community.vmware.vmware_guest:
     hostname: "{{ vcenter.hostname }}"
     port: "{{ vcenter.port }}"
     username: "{{ vcenter.username }}"
@@ -13,14 +13,14 @@
     hardware: "{{ bootstrap.common_specs.hardware }}"
     disk: "{{ vm.disk }}"
     networks: "{{ vm.networks }}"
-    validate_certs: no
+    validate_certs: false
     state: poweredoff
   loop: "{{ bootstrap.vms }}"
   loop_control:
     loop_var: vm
 
 - name: Deploy master vms from vm template
-  vmware_guest:
+  community.vmware.vmware_guest:
     hostname: "{{ vcenter.hostname }}"
     port: "{{ vcenter.port }}"
     username: "{{ vcenter.username }}"
@@ -33,14 +33,14 @@
     hardware: "{{ master.common_specs.hardware }}"
     disk: "{{ vm.disk }}"
     networks: "{{ vm.networks }}"
-    validate_certs: no
+    validate_certs: false
     state: poweredoff
   loop: "{{ master.vms }}"
   loop_control:
     loop_var: vm
 
 - name: Deploy infra vms from vm template
-  vmware_guest:
+  community.vmware.vmware_guest:
     hostname: "{{ vcenter.hostname }}"
     port: "{{ vcenter.port }}"
     username: "{{ vcenter.username }}"
@@ -53,14 +53,14 @@
     hardware: "{{ infra.common_specs.hardware }}"
     disk: "{{ vm.disk }}"
     networks: "{{ vm.networks }}"
-    validate_certs: no
+    validate_certs: false
     state: poweredoff
   loop: "{{ infra.vms }}"
   loop_control:
     loop_var: vm
 
 - name: Deploy worker vms from vm template
-  vmware_guest:
+  community.vmware.vmware_guest:
     hostname: "{{ vcenter.hostname }}"
     port: "{{ vcenter.port }}"
     username: "{{ vcenter.username }}"
@@ -73,14 +73,14 @@
     hardware: "{{ worker.common_specs.hardware }}"
     disk: "{{ vm.disk }}"
     networks: "{{ vm.networks }}"
-    validate_certs: no
+    validate_certs: false
     state: poweredoff
   loop: "{{ worker.vms }}"
   loop_control:
     loop_var: vm
 
 - name: Deploy manage vms from vm template
-  vmware_guest:
+  community.vmware.vmware_guest:
     hostname: "{{ vcenter.hostname }}"
     port: "{{ vcenter.port }}"
     username: "{{ vcenter.username }}"
@@ -93,14 +93,14 @@
     hardware: "{{ manage.common_specs.hardware }}"
     disk: "{{ vm.disk }}"
     networks: "{{ vm.networks }}"
-    validate_certs: no
+    validate_certs: false
     state: poweredoff
   loop: "{{ manage.vms }}"
   loop_control:
     loop_var: vm
 
 - name: Deploy loadbalancer vms from vm template
-  vmware_guest:
+  community.vmware.vmware_guest:
     hostname: "{{ vcenter.hostname }}"
     port: "{{ vcenter.port }}"
     username: "{{ vcenter.username }}"
@@ -113,7 +113,7 @@
     hardware: "{{ loadbalancer.common_specs.hardware }}"
     disk: "{{ vm.disk }}"
     networks: "{{ vm.networks }}"
-    validate_certs: no
+    validate_certs: false
     state: poweredoff
   loop: "{{ loadbalancer.vms }}"
   loop_control:

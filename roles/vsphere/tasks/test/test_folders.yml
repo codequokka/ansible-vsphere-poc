@@ -1,18 +1,18 @@
 ---
 - name: Create the list of folder names
-  set_fact:
+  ansible.builtin.set_fact:
     folder_names: "{{ vcenter.folder | dict2items | map(attribute='value') | list }}"
 
 - name: Check the vm folders exist in the datacenter
-  command: |
+  ansible.builtin.command: |
     govc find
       -type Folder /{{ vcenter.datacenter_name }}/vm/{{ folder_name }}
   environment:
     GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
     GOVC_USERNAME: "{{ vcenter.username }}"
     GOVC_PASSWORD: "{{ vcenter.password }}"
-    GOVC_INSECURE: true
-  changed_when: no
+    GOVC_INSECURE: "true"
+  changed_when: false
   loop: "{{ folder_names }}"
   loop_control:
     loop_var: folder_name
