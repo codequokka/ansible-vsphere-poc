@@ -1,8 +1,7 @@
 ---
 - name: Add tasks to add vswitches to esxi hosts
-  debug:
+  ansible.builtin.debug:
     msg: "[TODO] Add tasks to add vswitches to esxi hosts"
-
 # - name: Add a VMware vSwitch
 #   vmware_vswitch:
 #     hostname: '{{ esxi_hostname }}'

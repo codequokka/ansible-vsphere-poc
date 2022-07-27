@@ -1,6 +1,6 @@
 ---
 - name: Add esxi hosts to the cluster
-  vmware_host:
+  community.vmware.vmware_host:
     hostname: "{{ vcenter.hostname }}"
     port: "{{ vcenter.port }}"
     username: "{{ vcenter.username }}"
@@ -10,7 +10,7 @@
     esxi_hostname: "{{ esxi_hostname }}"
     esxi_username: "{{ esxi.username }}"
     esxi_password: "{{ esxi.password }}"
-    validate_certs: no
+    validate_certs: false
     state: present
   loop: "{{ esxi.hostnames }}"
   loop_control:

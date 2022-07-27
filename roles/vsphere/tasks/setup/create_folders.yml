@@ -1,10 +1,10 @@
 ---
 - name: Create the list of folder names
-  set_fact:
+  ansible.builtin.set_fact:
     folder_names: "{{ vcenter.folder | dict2items | map(attribute='value') | list }}"
 
 - name: Create the vm folders in the datacenter
-  vcenter_folder:
+  community.vmware.vcenter_folder:
     hostname: "{{ vcenter.hostname }}"
     port: "{{ vcenter.port }}"
     username: "{{ vcenter.username }}"
@@ -12,7 +12,7 @@
     datacenter_name: "{{ vcenter.datacenter_name }}"
     folder_name: "{{ folder_name }}"
     folder_type: vm
-    validate_certs: no
+    validate_certs: false
     state: present
   loop: "{{ folder_names }}"
   loop_control:

@@ -1,6 +1,6 @@
 ---
 - name: Enable the vmotion feature on the vmkernel port on esxi hosts
-  command: |
+  ansible.builtin.command: |
     govc host.vnic.service
       -host {{ esxi_hostname }}
       -enable=true vmotion {{ esxi.vmkernel_port }}
@@ -8,14 +8,12 @@
     GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
     GOVC_USERNAME: "{{ vcenter.username }}"
     GOVC_PASSWORD: "{{ vcenter.password }}"
-    GOVC_INSECURE: true
-  changed_when: no
+    GOVC_INSECURE: "true"
+  changed_when: false
   loop: "{{ esxi.hostnames }}"
   loop_control:
     loop_var: esxi_hostname
   when: platform != "vcsim"
-
-
 # - name: Gather VMKernel info about ESXi Host
 #   vmware_vmkernel_info:
 #     hostname: "{{ vcenter.hostname }}"

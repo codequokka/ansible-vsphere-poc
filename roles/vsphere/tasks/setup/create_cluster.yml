@@ -1,11 +1,11 @@
 ---
 - name: Create the cluster in the datacenter
-  vmware_cluster:
+  community.vmware.vmware_cluster:
     hostname: "{{ vcenter.hostname }}"
     port: "{{ vcenter.port }}"
     username: "{{ vcenter.username }}"
     password: "{{ vcenter.password }}"
     datacenter_name: "{{ vcenter.datacenter_name }}"
     cluster_name: "{{ vcenter.cluster_name }}"
-    validate_certs: no
+    validate_certs: false
     state: present

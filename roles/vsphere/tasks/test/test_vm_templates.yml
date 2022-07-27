@@ -1,25 +1,25 @@
 ---
 - name: Gather deployed vm templates info
-  command: |
+  ansible.builtin.command: |
     govc find
       -type VirtualMachine /{{ vcenter.datacenter_name }}/vm/{{ vcenter.folder.vm }}
   environment:
     GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
     GOVC_USERNAME: "{{ vcenter.username }}"
     GOVC_PASSWORD: "{{ vcenter.password }}"
-    GOVC_INSECURE: true
-  changed_when: no
+    GOVC_INSECURE: "true"
+  changed_when: false
   register: _govc_vm_templates_info
 
 - name: Create a list of deployed vm template's name
-  set_fact:
+  ansible.builtin.set_fact:
     deployed_vm_template_names: "{{ _govc_vm_templates_info.stdout_lines | map('basename') | list }}"
 
 - name: Check vm templates exist
-  assert:
+  ansible.builtin.assert:
     that: "'{{ vm_template_name }}' in deployed_vm_template_names"
     fail_msg: "Vm template: {{ vm_template_name }} does not exist"
-    quiet: yes
+    quiet: true
   loop: "{{ vm_templates | map(attribute='name') | list }}"
   loop_control:
     loop_var: vm_template_name

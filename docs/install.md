@@ -1,6 +1,9 @@
 ```console
-$ python3.6 --version
-Python 3.6.9
+$ python3 --version
+Python 3.10.4
+
+$ pipenv --version
+pipenv, version 2022.6.7
 
 $ govc version
 govc 0.23.0
@@ -10,11 +13,7 @@ jq-1.6
 ```
 
 ```console
-$ python3.6 -m venv .venv
-
-$ source .venv/bin/activate
-
-$ pip install -U pip
-
-$ pip install ansible ansible-lint pyvmomi
+$ pipenv install ansible pyvmomi
+$ pipenv install -d ansible-lint
+$ pipenv shell
 ```

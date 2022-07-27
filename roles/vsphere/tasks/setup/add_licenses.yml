@@ -1,26 +1,26 @@
 ---
 - name: Add the license to the vcenter
-  vcenter_license:
+  community.vmware.vcenter_license:
     hostname: "{{ vcenter.hostname }}"
     port: "{{ vcenter.port }}"
     username: "{{ vcenter.username }}"
     password: "{{ vcenter.password }}"
     license: "{{ vcenter.license }}"
-    validate_certs: no
+    validate_certs: false
     state: present
-  changed_when: no
+  changed_when: false
 
 - name: Add licenses to esxi hosts
-  vcenter_license:
+  community.vmware.vcenter_license:
     hostname: "{{ vcenter.hostname }}"
     port: "{{ vcenter.port }}"
     username: "{{ vcenter.username }}"
     password: "{{ vcenter.password }}"
     esxi_hostname: "{{ esxi_hostname }}"
     license: "{{ esxi.license }}"
-    validate_certs: no
+    validate_certs: false
     state: present
-  changed_when: no
+  changed_when: false
   loop: "{{ esxi.hostnames }}"
   loop_control:
     loop_var: esxi_hostname

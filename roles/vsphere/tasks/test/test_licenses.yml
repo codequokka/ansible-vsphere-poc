@@ -1,10 +1,10 @@
 ---
 - name: Create the list of vsphere hostnames
-  set_fact:
-    vsphere_hosts: "['{{ vcenter.hostname }}'] + {{ esxi.hostnames }}"
+  ansible.builtin.set_fact:
+    vsphere_hosts: "{{ [vcenter.hostname] + esxi.hostnames | list }}"
 
 - name: Check licsenses are added to the vsphere hosts
-  shell: |
+  ansible.builtin.shell: |
     set -o pipefail
     license=$(govc license.assigned.ls --json | jq -r '.[] | select(.EntityDisplayName == "{{ vsphere_host }}").AssignedLicense.LicenseKey')
     if [ "$license" != '{{ esxi.license }}' ]; then
@@ -17,19 +17,18 @@
     GOVC_URL: "{{ vcenter.hostname }}:{{ vcenter.port }}"
     GOVC_USERNAME: "{{ vcenter.username }}"
     GOVC_PASSWORD: "{{ vcenter.password }}"
-    GOVC_INSECURE: true
-  changed_when: no
+    GOVC_INSECURE: "true"
+  changed_when: false
   loop: "{{ vsphere_hosts }}"
   loop_control:
     loop_var: vsphere_host
-
 # $ govc license.ls
 # Key:                           Edition:  Used:  Total:
 # 00000-00000-00000-00000-00000  eval      0      0
 
 # $ govc license.assigned.ls
 # Id:                                   Scope:                                Name:          License:
-# host-1170                             c4edb07b-7e47-48cf-afd2-d905c8303dc0  192.168.0.111  00000-00000-00000-00000-00000  
-# c4edb07b-7e47-48cf-afd2-d905c8303dc0                                        192.168.0.101  00000-00000-00000-00000-00000  
-# host-1174                             c4edb07b-7e47-48cf-afd2-d905c8303dc0  192.168.0.112  00000-00000-00000-00000-00000  
-# host-1176                             c4edb07b-7e47-48cf-afd2-d905c8303dc0  192.168.0.113  00000-00000-00000-00000-00000  
+# host-1170                             c4edb07b-7e47-48cf-afd2-d905c8303dc0  192.168.0.111  00000-00000-00000-00000-00000
+# c4edb07b-7e47-48cf-afd2-d905c8303dc0                                        192.168.0.101  00000-00000-00000-00000-00000
+# host-1174                             c4edb07b-7e47-48cf-afd2-d905c8303dc0  192.168.0.112  00000-00000-00000-00000-00000
+# host-1176                             c4edb07b-7e47-48cf-afd2-d905c8303dc0  192.168.0.113  00000-00000-00000-00000-00000
